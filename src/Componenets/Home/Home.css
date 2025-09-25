@@ -1,0 +1,70 @@
+.message-bubble {
+  position: relative;
+  border-radius: 8px;
+  background-color: #b8c0e0;
+  padding: 8px 12px;
+  max-width: 300px;
+  color: #2d3669;
+  z-index: 1;
+}
+
+.message-bubble::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: -14px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-right: 26px solid #b8c0e0;
+  border-bottom: 10px solid transparent;
+  rotate: 33deg;
+  z-index: -1;
+}
+
+.message-bubble.self {
+  background-color: #8e9bce;
+  color: #1f254b;
+}
+
+.message-bubble.self::before {
+  left: auto;
+  right: -12px;
+  border-right: none;
+  border-left: 20px solid #8e9bce;
+  top: 0px;
+  rotate: -30deg;
+  z-index: -1;
+}
+
+.is-deleted {
+  background-color: white !important;
+  font-style: italic !important;
+  color: #1f254b !important;
+  border: 1px solid rgb(224, 224, 224) !important;
+}
+
+.is-deleted::before {
+  display: none !important;
+}
+
+.is-deleted::after {
+  display: none !important;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.6);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slideDown {
+  z-index: 1000;
+  animation: slideDown 0.5s ease-out forwards;
+}

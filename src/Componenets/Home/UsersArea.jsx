@@ -1,0 +1,103 @@
+import TotalUsers from './TotalUsers';
+import Users from './Users';
+import { mainMessageData, totalUsers, users } from '../../Data';
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import { useEffect, useState } from 'react';
+
+const UsersArea = ({ userId, messageData, setMessageData, messagesDate, setMessagesDate, setAllMessages,
+    allUsers, setAllUsers, setReceiver, unReads, setInputDisplay, selectBg, setSelectBg, textColor, setTextColor, countUnReads,
+    lastMessages, noUser, setNoUser, isOpen, setIsOpen }) => {
+
+    const [totalUsersArr, setTotalUsersArr] = useState([])
+    const toggle = () => setIsOpen(!isOpen);
+
+    const createColors = () => {
+        let colors = [], bg = []
+        users.forEach((e, i) => {
+            if (i < 10) {
+                colors.push(i * 100)
+            }
+            else {
+                colors.push(Number(i.toString()[1]) * 100)
+            }
+
+            bg.push('')
+        })
+        setTextColor([...colors])
+        setAllUsers([...users])
+        setSelectBg([...bg])
+    }
+
+    const searchUser = (inputValue) => {
+        const groupsId = []
+        mainMessageData.forEach((message) => {
+            if (message.groupId.includes(userId)) groupsId.push(...message.groupId)
+        })
+
+        const searchUsers = isOpen ? totalUsers : users.filter((user) => groupsId.includes(user.userId))
+
+        if (!inputValue) {
+            setAllUsers(users.filter((user) => groupsId.includes(user.userId)));
+            setTotalUsersArr(totalUsers)
+            setNoUser(false);
+            return;
+        }
+
+        const searchingUsers = searchUsers.filter(user => {
+            const query = inputValue.trim().toUpperCase();
+            return (
+                user.name.trim().toUpperCase().includes(query) ||
+                user.surname.trim().toUpperCase().includes(query) ||
+                (user.name.trim().toUpperCase().concat(" ", user.surname.trim().toUpperCase())).includes(query)
+            );
+        });
+
+        isOpen ? setAllUsers(users.filter((user) => groupsId.includes(user.userId))) : setAllUsers(searchingUsers);
+        setTotalUsersArr(searchingUsers)
+        setNoUser(searchingUsers.length === 0);
+    }
+
+    useEffect(() => {
+        createColors()
+    }, [])
+
+    return (
+
+        <div className="w-[30%] bg-olive-700 p-4 overflow-y-auto border-r border-olive-300">
+            <input
+                type="search"
+                placeholder="axtar..."
+                className="w-full mb-4 p-2 rounded-md border border-olive-300 focus:outline-none focus:ring-2 focus:ring-olive-400 transition bg-olive-400 text-white"
+                onChange={(e) => searchUser(e.target.value)}
+            />
+            <h2 className="text-2xl font-semibold mb-4 text-olive-100">İstifadəçilər</h2>
+            {
+                noUser ? <span className="text-red-600 font-semibold italic text-sm">
+                    {
+                        !isOpen ? "Heç bir mesajlaşma Tapılmadı" : "Bazada belə bir istifadəçi yoxdur"
+                    }
+                </span> : null
+            }
+            {
+                !isOpen ? <Users userId={userId} messageData={messageData} setMessageData={setMessageData}
+                    messagesDate={messagesDate} setMessagesDate={setMessagesDate}
+                    setAllMessages={setAllMessages} allUsers={allUsers} setAllUsers={setAllUsers} setReceiver={setReceiver}
+                    unReads={unReads} setInputDisplay={setInputDisplay}
+                    selectBg={selectBg} setSelectBg={setSelectBg}
+                    textColor={textColor} countUnReads={countUnReads}
+                    lastMessages={lastMessages} />
+
+                    : <TotalUsers userId={userId} messageData={messageData} setMessageData={setMessageData}
+                        messagesDate={messagesDate} setMessagesDate={setMessagesDate}
+                        setAllMessages={setAllMessages} setReceiver={setReceiver}
+                        unReads={unReads} setInputDisplay={setInputDisplay} totalUsersArr={totalUsersArr} setTotalUsersArr={setTotalUsersArr} />
+            }
+            <div className='fixed left-[calc(38%-60px)] bottom-[7vh] w-[50px] h-[50px] bg-white rounded-full flex justify-center items-center text-olive-600 cursor-pointer'
+                onClick={toggle}>
+                {isOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}
+            </div>
+        </div>
+    )
+}
+
+export default UsersArea
