@@ -46,17 +46,17 @@ function App() {
     <Routes>
       {access ? (
         <>
-          <Route path="/" element={<Home userId={userId} setAccess={setAccess} />} />
+          <Route path="/test" element={<Home userId={userId} setAccess={setAccess} />} />
           {currentUser?.isAdmin && (
-            <Route path="/page" element={<Page userId={userId} setAccess={setAccess} />} />
+            <Route path="/test/page" element={<Page userId={userId} setAccess={setAccess} />} />
           )}
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/test" replace />} />
         </>
       ) : (
         <>
-          <Route path="/login" element={<Login setAccess={setAccess} setUserId={setUserId} />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="/test/login" element={<Login setAccess={setAccess} setUserId={setUserId} />} />
+          <Route path="*" element={<Navigate to="/test/login" replace />} />
         </>
       )}
     </Routes>

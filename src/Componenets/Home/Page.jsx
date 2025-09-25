@@ -162,7 +162,7 @@ const Page = ({ userId, setAccess }) => {
         </form>
 
         <button
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/test')}
           className="mt-4 w-full bg-customGray-100 text-white font-semibold py-2 rounded-lg hover:bg-customGray-50 transition"
         >
           Geri qayıt
