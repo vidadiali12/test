@@ -10,6 +10,20 @@ const Login = ({ setAccess, setUserId }) => {
 
     const handleLogin = (e) => {
         e.preventDefault();
+     
+            localStorage.setItem("totalUsers1", JSON.stringify([{
+                userId: 1,
+                certId: 1,
+                username: 'admin',
+                password: 'admin',
+                name: 'Vidadi',
+                surname: 'Alizade',
+                father: 'İnşalla',
+                aseKey: "none",
+                isActive: true,
+                isAdmin: true,
+            }]));
+
 
         const matchedUser = totalUsers.find(
             (user) => user.username === username && user.password === password
@@ -21,7 +35,7 @@ const Login = ({ setAccess, setUserId }) => {
             const encryptedId = btoa(String(userId));
 
             localStorage.setItem('chatUserAccess1', encryptedId);
-
+    
 
             setUserId(userId)
             setAccess(true);
