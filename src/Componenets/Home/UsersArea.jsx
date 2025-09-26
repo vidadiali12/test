@@ -5,7 +5,7 @@ import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 
 const UsersArea = ({ userId, messageData, setMessageData, messagesDate, setMessagesDate, setAllMessages,
-    allUsers, setAllUsers, setReceiver, unReads, setInputDisplay, selectBg, setSelectBg, textColor, setTextColor, countUnReads,
+    allUsers, setAllUsers, setReceiver, setInputDisplay, selectBg, setSelectBg, textColor, setTextColor,
     lastMessages, noUser, setNoUser, isOpen, setIsOpen, zIndex, setZIndex }) => {
 
     const [totalUsersArr, setTotalUsersArr] = useState([])
@@ -112,7 +112,7 @@ const UsersArea = ({ userId, messageData, setMessageData, messagesDate, setMessa
                     : <TotalUsers userId={userId} messageData={messageData} setMessageData={setMessageData}
                         messagesDate={messagesDate} setMessagesDate={setMessagesDate}
                         setAllMessages={setAllMessages} setReceiver={setReceiver}
-                        unReads={unReads} setInputDisplay={setInputDisplay} totalUsersArr={totalUsersArr} setTotalUsersArr={setTotalUsersArr}
+                        setInputDisplay={setInputDisplay} totalUsersArr={totalUsersArr} setTotalUsersArr={setTotalUsersArr}
                         zIndex={zIndex} setZIndex={setZIndex} />
             }
             {

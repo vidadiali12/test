@@ -22,7 +22,6 @@ const Home = ({ userId, setAccess }) => {
     const [receiver, setReceiver] = useState(null)
     const [allMessages, setAllMessages] = useState([])
     const [messagesDate, setMessagesDate] = useState([])
-    const [countUnReads, setCountUnReads] = useState([])
     const [inputDisplay, setInputDisplay] = useState('hidden')
     const [lastMessages, setLastMessages] = useState({})
     const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +60,6 @@ const Home = ({ userId, setAccess }) => {
         if (!loading) {
             findUser();
             sortUsers(mainMessageData);
-            unReads(mainMessageData);
             findLastMessage(mainMessageData);
         }
     }, [loading]);
@@ -96,28 +94,6 @@ const Home = ({ userId, setAccess }) => {
             });
         }
     };
-
-    const unReads = (messages = mainMessageData) => {
-        let unReadsArr = [];
-
-        users.forEach(user => {
-            let unRead = 0;
-            messages.forEach(message => {
-                if (!message.isRead && message.senderId === user.userId && user.userId !== userId && message.groupId.includes(userId)) {
-                    unRead++;
-                }
-            });
-
-            if (unRead > 0) {
-                unReadsArr.push({
-                    idOfUser: user.userId,
-                    unRead: unRead
-                });
-            }
-        });
-
-        setCountUnReads(unReadsArr);
-    }
 
     const findUser = () => {
         const user = totalUsers.find(e => e.userId === userId);
@@ -261,15 +237,15 @@ const Home = ({ userId, setAccess }) => {
                             <UsersArea userId={userId} messageData={mainMessageData} setMessageData={setMainMessageData}
                                 messagesDate={messagesDate} setMessagesDate={setMessagesDate}
                                 setAllMessages={setAllMessages} allUsers={allUsers} setAllUsers={setAllUsers}
-                                setReceiver={setReceiver} unReads={unReads} setInputDisplay={setInputDisplay}
+                                setReceiver={setReceiver} setInputDisplay={setInputDisplay}
                                 selectBg={selectBg} setSelectBg={setSelectBg} textColor={textColor} setTextColor={setTextColor}
-                                countUnReads={countUnReads} lastMessages={lastMessages} noUser={noUser}
+                                lastMessages={lastMessages} noUser={noUser}
                                 setNoUser={setNoUser} isOpen={isOpen} setIsOpen={setIsOpen} zIndex={zIndex} setZIndex={setZIndex} />
 
                             {/* Messages */}
                             <div className="md:w-[70%] bg-olive-500 p-2 overflow-hidden flex flex-col max-h-[100vh] rounded-lg shadow-md relative w-[100%]">
                                 <div className='flex justify-between items-center md:py-0 py-2'>
-                                    <h2 className="text-2xl font-semibold text-olive-100 pl-3 flex items-center">
+                                    <h2 className="text-2xl font-semibold text-olive-100 pb-2 pl-3 flex items-center">
                                         {
                                             !receiver
                                                 ? 'Mesajlar'

@@ -10,7 +10,6 @@ const TotalUsers = ({
     setMessagesDate,
     setAllMessages,
     setReceiver,
-    unReads,
     setInputDisplay,
     totalUsersArr,
     setTotalUsersArr,
@@ -80,8 +79,6 @@ const TotalUsers = ({
             }
         });
         setMessagesDate(messagesArrByDates);
-
-        unReads(updatedMessageData);
         setInputDisplay("flex");
     };
 
