@@ -52,6 +52,10 @@
   display: none !important;
 }
 
+.element-z-i{
+  z-index: 10000;
+}
+
 @keyframes slideDown {
   0% {
     opacity: 0;

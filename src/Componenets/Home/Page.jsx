@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,7 +27,7 @@ const Page = ({ userId, setAccess }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Password təkrarı yoxlaması
@@ -35,9 +36,7 @@ const Page = ({ userId, setAccess }) => {
       return;
     }
 
-    let users = JSON.parse(localStorage.getItem("totalUsers1")) || [];
-
-    const newId = users.length + 1;
+    const newId = formData.username + Math.floor(Math.random() * 1000);
 
     const newUser = {
       userId: newId,
@@ -52,13 +51,17 @@ const Page = ({ userId, setAccess }) => {
       isAdmin: formData.isAdmin,
     };
 
-    users.push(newUser);
+    try {
+      const res = await axios.post("https://chat-backend-9kwg.onrender.com/users", newUser);
+      console.log("User created:", res.data);
+      alert("✅ İstifadəçi uğurla əlavə olundu!");
 
-    localStorage.setItem("totalUsers1", JSON.stringify(users));
+      setFormData(initialForm);
 
-    alert("✅ İstifadəçi uğurla əlavə olundu!");
+    } catch (err) {
+      console.error("Error:", err.response?.data || err.message);
+    }
 
-    setFormData(initialForm);
   };
 
   return (

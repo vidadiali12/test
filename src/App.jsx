@@ -2,15 +2,30 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import Home from "./Componenets/Home/Home"
 import Login from "./Componenets/Login/Login"
 import { useEffect, useState } from "react"
-import { totalUsers } from "./Data"
+import { totalUsersFetch } from "./Data"
 import Page from "./Componenets/Home/Page"
 
 function App() {
   const [access, setAccess] = useState(false)
   const [userId, setUserId] = useState(null)
   const [loading, setLoading] = useState(true) // refreshdə gözlətmək üçün
+  const [currentUser, setCurrentUser] = useState({})
+  const [totalUsers, setTotalUsers] = useState([])
+
+
+
+  const currentUserF = async () => {
+    setCurrentUser(totalUsers.find((user) => user.userId === userId))
+  }
+
+
+  const callData = async () => {
+    setTotalUsers(await totalUsersFetch())
+  }
+
 
   useEffect(() => {
+    callData();
     const encryptedId = localStorage.getItem("chatUserAccess1")
     if (encryptedId) {
       const decryptedId = Number(atob(encryptedId))
@@ -21,6 +36,7 @@ function App() {
       setAccess(false)
     }
     setLoading(false) // artıq yoxlanış bitdi
+    currentUserF();
   }, [])
 
   useEffect(() => {
@@ -35,7 +51,7 @@ function App() {
     }
   }, [access])
 
-  const currentUser = totalUsers.find((user) => user.userId === userId)
+
 
   // refresh zamanı əvvəlcə boş ekranda qalmamaq üçün
   if (loading) {

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { totalUsers } from '../../Data';
+import React, { useEffect, useState } from 'react';
+import { totalUsersFetch } from '../../Data';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 const Login = ({ setAccess, setUserId }) => {
@@ -7,8 +7,9 @@ const Login = ({ setAccess, setUserId }) => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
+    const [totalUsers, setTotalUsers] = useState([])
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
         const matchedUser = totalUsers.find(
@@ -21,7 +22,7 @@ const Login = ({ setAccess, setUserId }) => {
             const encryptedId = btoa(String(userId));
 
             localStorage.setItem('chatUserAccess1', encryptedId);
-    
+            console.log(userId)
 
             setUserId(userId)
             setAccess(true);
@@ -30,6 +31,13 @@ const Login = ({ setAccess, setUserId }) => {
             setError('❌ İstifadəçi adı və ya şifrə yanlışdır.');
         }
     };
+
+    const createTotalUsers = async () => {
+        setTotalUsers(await totalUsersFetch())
+    }
+    useEffect(() => {
+        createTotalUsers()
+    })
 
     return (
         <section className="min-h-screen flex items-center justify-center bg-gray-100">
