@@ -13,7 +13,7 @@ const Users = ({
     setSelectBg,
     textColor,
     lastMessages,
-    zIndex, 
+    zIndex,
     setZIndex
 }) => {
     const [allUsers, setAllUsers] = useState([]);
@@ -32,7 +32,9 @@ const Users = ({
 
                 let idsOfMessageSending = [];
                 allMessages.forEach((message) => {
-                    idsOfMessageSending.push(...message.groupId);
+                    if (message.groupId.includes(userId)) {
+                        idsOfMessageSending.push(...message.groupId);
+                    }
                 });
                 idsOfMessageSending = [...new Set(idsOfMessageSending)];
 
@@ -59,32 +61,32 @@ const Users = ({
 
 
     const calculateUnReads = (messages, users) => {
-    let unReadsArr = [];
+        let unReadsArr = [];
 
-    users.forEach(user => {
-        let unRead = 0;
+        users.forEach(user => {
+            let unRead = 0;
 
-        messages.forEach(message => {
-            if (
-                !message.isRead &&
-                message.senderId == user.userId && // həmin user göndərib
-                message.groupId.includes(userId)   // mənimlə yazışmadır
-            ) {
-                unRead++;
+            messages.forEach(message => {
+                if (
+                    !message.isRead &&
+                    message.senderId == user.userId && // həmin user göndərib
+                    message.groupId.includes(userId)   // mənimlə yazışmadır
+                ) {
+                    unRead++;
+                }
+            });
+
+            if (unRead > 0) {
+                unReadsArr.push({
+                    idOfUser: user.userId,
+                    unRead
+                });
             }
         });
 
-        if (unRead > 0) {
-            unReadsArr.push({
-                idOfUser: user.userId,
-                unRead
-            });
-        }
-    });
-
-    setCountUnReads(unReadsArr);
-    console.log(unReadsArr)
-};
+        setCountUnReads(unReadsArr);
+        console.log(unReadsArr)
+    };
 
 
 

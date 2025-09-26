@@ -83,7 +83,7 @@ const UsersArea = ({ userId, messageData, setMessageData, messagesDate, setMessa
                 placeholder="axtar..."
                 className="w-full mb-4 p-2 rounded-md border border-olive-300 focus:outline-none focus:ring-2 focus:ring-olive-400 transition bg-olive-400 text-white"
                 onChange={(e) => searchUser(e.target.value)}
-                style={{display: 'none'}}
+                style={{ display: 'none' }}
             />
             <h2 className="text-2xl font-semibold mb-4 text-olive-100">İstifadəçilər</h2>
             {
@@ -115,10 +115,12 @@ const UsersArea = ({ userId, messageData, setMessageData, messagesDate, setMessa
                         unReads={unReads} setInputDisplay={setInputDisplay} totalUsersArr={totalUsersArr} setTotalUsersArr={setTotalUsersArr}
                         zIndex={zIndex} setZIndex={setZIndex} />
             }
-            <div className='fixed md:left-[calc(38%-60px)] left-[calc(100%-75px)] bottom-[7vh] w-[50px] h-[50px] bg-white rounded-full flex justify-center items-center text-olive-600 cursor-pointer'
-                onClick={toggle}>
-                {isOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}
-            </div>
+            {
+                totalUsers.find(e => e.userId === userId)?.isAdmin ? <div className='fixed md:left-[calc(38%-60px)] left-[calc(100%-75px)] bottom-[7vh] w-[50px] h-[50px] bg-white rounded-full flex justify-center items-center text-olive-600 cursor-pointer'
+                    onClick={toggle}>
+                    {isOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}
+                </div> : null
+            }
         </div>
     )
 }
