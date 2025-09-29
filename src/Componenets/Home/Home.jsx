@@ -153,9 +153,7 @@ const Home = ({ userId, setAccess }) => {
 
             try {
                 const res = await axios.post("https://chat-backend-9kwg.onrender.com/messages", newMessage);
-                console.log("Message created:", res.data);
-
-                const updatedMessageData = [...mainMessageData, newMessage];
+                const updatedMessageData = [...res.data, newMessage];
                 setMainMessageData(updatedMessageData);
 
                 const updatedMessages = updatedMessageData
@@ -302,7 +300,7 @@ const Home = ({ userId, setAccess }) => {
                                                                                             <><div
                                                                                                 className="flex items-center justify-center w-[17px] h-[17px] rounded-full bg-white shadow cursor-pointer"
                                                                                                 onClick={(e) => showInform(e.currentTarget, message.id)}
-                                                                                                style={{display: 'none'}}
+                                                                                                style={{ display: 'none' }}
                                                                                             >
                                                                                                 <AiOutlineInfoCircle className="text-gray-500" size={16} />
                                                                                                 {activeDeletedId === message.id && (
