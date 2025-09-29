@@ -156,8 +156,8 @@ const Home = ({ userId, setAccess }) => {
 
                 try {
                     const res = (await axios.get("https://chat-backend-9kwg.onrender.com/messages")).data
-                    const updatedMessageData = [...res, newMessage];
-                    setMainMessageData(updatedMessageData);
+                    const updatedMessageData = res;
+                    setMainMessageData(res);
 
                     const updatedMessages = updatedMessageData
                         .filter(e => e.groupId.includes(userId) && e.groupId.includes(receiver))
