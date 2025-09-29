@@ -16,7 +16,6 @@ export const mainMessageDataFetch = async () => {
     return res.data;
   }
   catch (err) {
-    console.error("Error fetching users:", err);
     return [];
   }
 };
@@ -29,7 +28,6 @@ export const totalUsersFetch = async () => {
 
     return res.data;
   } catch (err) {
-    console.error("Error fetching users:", err);
     return [];
   }
 };

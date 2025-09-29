@@ -53,13 +53,11 @@ const Page = ({ userId, setAccess }) => {
 
     try {
       const res = await axios.post("https://chat-backend-9kwg.onrender.com/users", newUser);
-      console.log("User created:", res.data);
       alert("✅ İstifadəçi uğurla əlavə olundu!");
 
       setFormData(initialForm);
 
     } catch (err) {
-      console.error("Error:", err.response?.data || err.message);
     }
 
   };

@@ -48,7 +48,6 @@ const Home = ({ userId, setAccess }) => {
 
                 setLoading(false);
             } catch (err) {
-                console.error("❌ Error fetching data:", err);
             }
         };
 
@@ -172,10 +171,8 @@ const Home = ({ userId, setAccess }) => {
                     setIsOpen(false)
                 }
                 catch (err) {
-                    console.error("Error:", err.response?.data);
                 }
             } catch (err) {
-                console.error("Error:", err.response?.data || err.newMessage);
             }
         }
     };

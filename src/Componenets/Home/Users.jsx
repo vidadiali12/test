@@ -50,7 +50,6 @@ const Users = ({
                 calculateUnReads(allMessages, filteredUsers);
 
             } catch (err) {
-                console.error("❌ Fetch error:", err);
             } finally {
                 setLoading(false);
             }
@@ -85,7 +84,6 @@ const Users = ({
         });
 
         setCountUnReads(unReadsArr);
-        console.log(unReadsArr)
     };
 
 
@@ -124,7 +122,6 @@ const Users = ({
                     )
                 );
             } catch (err) {
-                console.error("❌ Update error:", err);
             }
         }
 

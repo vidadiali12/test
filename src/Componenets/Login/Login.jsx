@@ -22,7 +22,6 @@ const Login = ({ setAccess, setUserId }) => {
             const encryptedId = btoa(String(userId));
 
             localStorage.setItem('chatUserAccess1', encryptedId);
-            console.log(userId)
 
             setUserId(userId)
             setAccess(true);

@@ -51,9 +51,7 @@ const TotalUsers = ({
                         )
                     )
                 );
-                console.log("✅ Messages updated on backend");
             } catch (err) {
-                console.error("❌ Update error:", err);
             }
         }
 

@@ -14,8 +14,6 @@ const Deleted = ({ className = "", style = {}, messageId, setAllMessages }) => {
                 { message: "", isDeleted: true }
             );
 
-            console.log("✅ Deleted for all:", res.data);
-
             // localStorage və state-i də yenilə
             const deletedFromAll = mainMessageData.map((message) =>
                 message.id === messageId
@@ -27,7 +25,6 @@ const Deleted = ({ className = "", style = {}, messageId, setAllMessages }) => {
             setAllMessages(deletedFromAll);
 
         } catch (err) {
-            console.error("❌ Delete error:", err);
         }
     };
 
