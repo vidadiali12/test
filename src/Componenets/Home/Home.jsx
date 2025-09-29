@@ -152,21 +152,28 @@ const Home = ({ userId, setAccess }) => {
             };
 
             try {
-                const res = await axios.post("https://chat-backend-9kwg.onrender.com/messages", newMessage);
-                const updatedMessageData = [...res.data, newMessage];
-                setMainMessageData(updatedMessageData);
+                await axios.post("https://chat-backend-9kwg.onrender.com/messages", newMessage);
 
-                const updatedMessages = updatedMessageData
-                    .filter(e => e.groupId.includes(userId) && e.groupId.includes(receiver))
-                    .sort((a, b) => new Date(a.time) - new Date(b.time));
+                try {
+                    const res = (await axios.get("https://chat-backend-9kwg.onrender.com/messages")).data
+                    const updatedMessageData = [...res, newMessage];
+                    setMainMessageData(updatedMessageData);
 
-                setAllMessages(updatedMessages);
+                    const updatedMessages = updatedMessageData
+                        .filter(e => e.groupId.includes(userId) && e.groupId.includes(receiver))
+                        .sort((a, b) => new Date(a.time) - new Date(b.time));
 
-                thisMessage.value = '';
+                    setAllMessages(updatedMessages);
 
-                sortUsers(updatedMessageData);
-                findLastMessage(updatedMessageData)
-                setIsOpen(false)
+                    thisMessage.value = '';
+
+                    sortUsers(updatedMessageData);
+                    findLastMessage(updatedMessageData)
+                    setIsOpen(false)
+                }
+                catch (err) {
+                    console.error("Error:", err.response?.data);
+                }
             } catch (err) {
                 console.error("Error:", err.response?.data || err.newMessage);
             }
